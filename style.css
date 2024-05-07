@@ -1,0 +1,90 @@
+* {
+  box-sizing: border-box;
+  font-family: monospace, sans-serif;
+  font-size: 36px;
+}
+
+@font-face{
+  font-family:'digital-clock-font';
+  src: url('./digital-7.italic.ttf');
+ }
+
+body {
+  display: flex;
+  flex-direction: column;
+  background-color: #b8ab64;
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  background-color: #777;
+  width: 500px;
+  height: 800px;
+  margin: 50px auto;
+  padding: 16px;
+  border: 3px outset #888;
+  border-radius: 5px;
+}
+
+#display {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  height: 100px;
+  padding: 4px 32px;
+  background-color: #62c962;
+  border: 5px inset #888;  
+}
+
+#numDisplay {
+  font-family: 'digital-clock-font', sans-serif;
+  font-size: 60px;
+  padding: 8px;
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+  width: 462px;
+  height: 600px;
+  margin: 0 auto;
+  padding: 16px 0;
+  gap: 16px;
+}
+
+.row {
+  display: flex;
+  gap: 16px;
+  flex: 1;
+}
+
+.num, .reset, .op {
+  flex: 1;
+  color: #fff;
+  border: 3px outset;
+}
+
+.num, .op {
+  background-color: #444;
+  border-color: #555;
+}
+
+.num:active, .op:active {
+  border: inset #555;
+}
+
+.reset {
+  background-color: #c00;
+  border-color: #e72c2c;
+}
+
+.reset:active {
+  border: inset #e72c2c;
+}
+
+#equals {
+  flex: 4.1;
+}
+

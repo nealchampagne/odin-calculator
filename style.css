@@ -44,6 +44,12 @@ body {
   padding: 8px;
 }
 
+#opDisplay {
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 0 12px;
+}
+
 .input {
   display: flex;
   flex-direction: column;
@@ -60,18 +66,18 @@ body {
   flex: 1;
 }
 
-.num, .reset, .op {
+.num, .reset, .op, .enter, .dot{
   flex: 1;
   color: #fff;
   border: 3px outset;
 }
 
-.num, .op {
+.num, .op, .enter, .dot {
   background-color: #444;
   border-color: #555;
 }
 
-.num:active, .op:active {
+.num:active, .op:active, .enter:active, .dot:active {
   border: inset #555;
 }
 
@@ -84,7 +90,6 @@ body {
   border: inset #e72c2c;
 }
 
-#equals {
+.enter {
   flex: 4.1;
 }
-

@@ -49,7 +49,7 @@ nums.forEach(num => num.addEventListener('click', () => {
       operand1 = num.textContent;
     }
     numDisplay.textContent = operand1;
-  } else {
+    } else {
     if (operand2 !== '0') {
       operand2 = operand2 + num.textContent;
     } else {
@@ -84,12 +84,49 @@ ops.forEach(op => op.addEventListener('click', () => {
     numDisplay.textContent = operand1;
     operator = op.textContent;
     opDisplay.textContent = operator;
-    operand2 = ''; 
+    display.insertBefore(opDisplay, numDisplay);
+    display.style.justifyContent = 'space-between';
+    operand2 = '';
   } else {
     operator = op.textContent;
     opDisplay.textContent = operator;
   }
 }))
+
+/** Handle logic for equals button */
+enter.addEventListener('click', () => {
+  if (operator && operand2) {
+    operand1 = operate(operator, operand1, operand2);
+    numDisplay.textContent = operand1;
+    operator = '';
+    operand2 = '';
+    opDisplay.remove();
+    display.style.justifyContent = 'end';
+  } else if (operator) {
+    operand1 = operate(operator, operand1, operand1);
+    numDisplay.textContent = operand1;
+    operator = '';
+    opDisplay.remove();
+    display.style.justifyContent = 'end';
+  }
+})
+
+/** Handle logic for delete button */
+back.addEventListener('click', () => {
+  if (operand2 && operand2.length === 1) {
+    operand2 = '0';
+    numDisplay.textContent = operand2;
+  } else if (operand2) {
+    operand2 = operand2.substring(0, operand2.length - 1);
+    numDisplay.textContent = operand2;
+  } else if (operand1.length === 1) {
+    operand1 = '0';
+    numDisplay.textContent = operand1;
+  } else {
+    operand1 = operand1.substring(0, operand1.length - 1);
+    numDisplay.textContent = operand1;
+  }
+})
 
 /** Clear the calculator */
 clear.addEventListener('click', () => {

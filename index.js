@@ -149,7 +149,7 @@ enter.addEventListener('click', () => {
 
 /** Handle logic for delete button */
 back.addEventListener('click', () => {
-  if (!result) {
+  if (!result && (!operator || (operator && operand2))) {
   if (operand2 && operand2.length === 1) {
     operand2 = '0';
     numDisplay.textContent = operand2;
@@ -176,15 +176,3 @@ clear.addEventListener('click', () => {
   operand2 = '';
   numDisplay.textContent = operand1;
 });
-
-/** Rounding/Scientific notation helper function */
-const calculatorProof = num => {
-  if ((10**8 < num || -(10**8) > num) || (10**-8 > num > -(10**-8))) {
-    return num.toExponential(8);
-  } else {
-    if (num.length < 0) {
-
-    }
-    return num;
-  }
-}

@@ -20,7 +20,7 @@ body {
   display: flex;
   flex-direction: column;
   background-color: #777;
-  width: 500px;
+  width: 700px;
   height: 800px;
   margin: 50px auto;
   padding: 16px;
@@ -41,7 +41,7 @@ body {
 #numDisplay {
   font-family: 'digital-clock-font', sans-serif;
   font-size: 60px;
-  padding: 8px;
+  padding: 0 8px;
 }
 
 #opDisplay {
@@ -53,7 +53,7 @@ body {
 .input {
   display: flex;
   flex-direction: column;
-  width: 462px;
+  width: 662px;
   height: 600px;
   margin: 0 auto;
   padding: 16px 0;
@@ -91,5 +91,5 @@ body {
 }
 
 .enter {
-  flex: 4.1;
+  flex: 3.67;
 }

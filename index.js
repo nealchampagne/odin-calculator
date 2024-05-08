@@ -15,6 +15,7 @@ opDisplay.setAttribute('id', 'opDisplay');
 let operand1 = '0';
 let operand2 = '';
 let operator = '';
+let result = '';
 
 numDisplay.textContent = operand1;
 
@@ -34,6 +35,9 @@ const operate = (op, num1, num2) => {
     case 'x':
       return multiply(num1, num2);
     case '÷':
+      if (num2 == 0) {
+        return 'Nice try'
+      }
       return divide(num1, num2);
     default:
       console.log('OOPS');
@@ -63,6 +67,7 @@ nums.forEach(num => num.addEventListener('click', () => {
 
 /** Handle logic for inserting decimal points */
 dot.addEventListener('click', () => {
+  if (!result) {
   if (!operator && !operand1.includes('.')) {
     operand1 = operand1 + dot.textContent;
     numDisplay.textContent = operand1;
@@ -70,7 +75,7 @@ dot.addEventListener('click', () => {
     operand2 = '0' + dot.textContent;
     numDisplay.textContent = operand2;
   }
-})
+}})
 
 /** Handle logic for operator buttons */
 ops.forEach(op => op.addEventListener('click', () => {
@@ -139,3 +144,15 @@ clear.addEventListener('click', () => {
   operand2 = '';
   numDisplay.textContent = operand1;
 });
+
+/** Rounding/Scientific notation helper function */
+const calculatorProof = num => {
+  if ((10**8 < num || -(10**8) > num) || (10**-8 > num > -(10**-8))) {
+    return num.toExponential(8);
+  } else {
+    if (num.length < 0) {
+
+    }
+    return num;
+  }
+}

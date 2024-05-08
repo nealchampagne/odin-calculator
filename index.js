@@ -12,9 +12,9 @@ const opDisplay = document.createElement('div');
 opDisplay.setAttribute('id', 'opDisplay');
 
 /** Initialize global variables */
+let operator = '';
 let operand1 = '0';
 let operand2 = '';
-let operator = '';
 let result = '';
 
 numDisplay.textContent = operand1;
@@ -40,7 +40,7 @@ const operate = (op, num1, num2) => {
       }
       return divide(num1, num2);
     default:
-      console.log('OOPS');
+      alert('OOPS');
   }
 };
 
@@ -50,11 +50,16 @@ nums.forEach(num => num.addEventListener('click', () => {
     if (operand1 !== '0') {
       operand1 = operand1 + num.textContent;
     } else {
+      result = '';
       operand1 = num.textContent;
     }
     numDisplay.textContent = operand1;
     } else {
-    if (operand2 !== '0') {
+    if (result) {
+      operand1 = result;
+      result = '';
+      operand2 = num.textContent;
+    } else if (operand2 !== '0') {
       operand2 = operand2 + num.textContent;
     } else {
       operand2 = num.textContent;
@@ -69,13 +74,29 @@ nums.forEach(num => num.addEventListener('click', () => {
 dot.addEventListener('click', () => {
   if (!result) {
   if (!operator && !operand1.includes('.')) {
-    operand1 = operand1 + dot.textContent;
+    operand1 = operand1 + '.';
     numDisplay.textContent = operand1;
-  } else if (operator) {
-    operand2 = '0' + dot.textContent;
+  } else if (operator && !operand2) {
+    operand2 = '0.';
+    opDisplay.remove();
+    display.style.justifyContent = 'end';
+    numDisplay.textContent = operand2;
+  } else if (!operand2.includes('.')){
+    operand2 = operand2 + '.';
+    numDisplay.textContent = operand2;
+  }} else if (!operator) {
+    result = '';
+    operand1 = operand1 + '.';
+    numDisplay.textContent = operand1;
+  } else {
+    operand1 = result;
+    result = '';
+    operand2 = '0.';
+    opDisplay.remove();
+    display.style.justifyContent = 'end';
     numDisplay.textContent = operand2;
   }
-}})
+})
 
 /** Handle logic for operator buttons */
 ops.forEach(op => op.addEventListener('click', () => {
@@ -85,9 +106,10 @@ ops.forEach(op => op.addEventListener('click', () => {
     display.insertBefore(opDisplay, numDisplay);
     display.style.justifyContent = 'space-between';
   } else if (operand2) {
-    operand1 = operate(operator, operand1, operand2);
-    numDisplay.textContent = operand1;
+    result = operate(operator, operand1, operand2);
+    numDisplay.textContent = result;
     operator = op.textContent;
+    operand1 = result;
     opDisplay.textContent = operator;
     display.insertBefore(opDisplay, numDisplay);
     display.style.justifyContent = 'space-between';
@@ -101,23 +123,33 @@ ops.forEach(op => op.addEventListener('click', () => {
 /** Handle logic for equals button */
 enter.addEventListener('click', () => {
   if (operator && operand2) {
-    operand1 = operate(operator, operand1, operand2);
-    numDisplay.textContent = operand1;
+    result = operate(operator, operand1, operand2);
+    numDisplay.textContent = result;
     operator = '';
+    operand1 = '0';
     operand2 = '';
     opDisplay.remove();
     display.style.justifyContent = 'end';
   } else if (operator) {
-    operand1 = operate(operator, operand1, operand1);
-    numDisplay.textContent = operand1;
+    if (result) {
+      result = operate(operator, result, result);
+      numDisplay.textContent = result;
+      operator = '';
+      opDisplay.remove();
+      display.style.justifyContent = 'end';
+    } else {
+    result = operate(operator, operand1, operand1);
+    numDisplay.textContent = result;
     operator = '';
+    operand1 = '0';
     opDisplay.remove();
     display.style.justifyContent = 'end';
-  }
+  }}
 })
 
 /** Handle logic for delete button */
 back.addEventListener('click', () => {
+  if (!result) {
   if (operand2 && operand2.length === 1) {
     operand2 = '0';
     numDisplay.textContent = operand2;
@@ -131,7 +163,7 @@ back.addEventListener('click', () => {
     operand1 = operand1.substring(0, operand1.length - 1);
     numDisplay.textContent = operand1;
   }
-})
+}})
 
 /** Clear the calculator */
 clear.addEventListener('click', () => {

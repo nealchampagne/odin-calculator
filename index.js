@@ -4,8 +4,8 @@ const nums = document.querySelectorAll('.num');
 const ops = document.querySelectorAll('.op');
 const dot = document.querySelector('.dot');
 const enter = document.querySelector('.enter');
-const clear = document.getElementById('clear');
-const back = document.getElementById('back');
+const clear = document.getElementById('Delete');
+const back = document.getElementById('Backspace');
 const display = document.getElementById('display');
 const numDisplay = document.getElementById('numDisplay');
 const opDisplay = document.createElement('div');
@@ -16,7 +16,6 @@ let operator = '';
 let operand1 = '0';
 let operand2 = '';
 let result = '';
-
 numDisplay.textContent = operand1;
 
 /** Arithmetic helpers */
@@ -47,9 +46,9 @@ const operate = (op, num1, num2) => {
 /** Handle logic when number buttons are pressed */
 nums.forEach(num => num.addEventListener('click', () => {
   if (!operator) {
-    if (operand1 !== '0') {
+    if (operand1 !== '0' && operand1.length < 17) {
       operand1 = operand1 + num.textContent;
-    } else {
+    } else if (operand1 === '0') {
       result = '';
       operand1 = num.textContent;
     }
@@ -59,9 +58,9 @@ nums.forEach(num => num.addEventListener('click', () => {
       operand1 = result;
       result = '';
       operand2 = num.textContent;
-    } else if (operand2 !== '0') {
+    } else if (operand2 !== '0' && operand2.length < 17) {
       operand2 = operand2 + num.textContent;
-    } else {
+    } else if (operand2 === '' || operand2 === '0') {
       operand2 = num.textContent;
     }
     opDisplay.remove();
@@ -81,7 +80,7 @@ dot.addEventListener('click', () => {
     opDisplay.remove();
     display.style.justifyContent = 'end';
     numDisplay.textContent = operand2;
-  } else if (!operand2.includes('.')){
+  } else if (operand2 && !operand2.includes('.')){
     operand2 = operand2 + '.';
     numDisplay.textContent = operand2;
   }} else if (!operator) {
@@ -144,7 +143,10 @@ enter.addEventListener('click', () => {
     operand1 = '0';
     opDisplay.remove();
     display.style.justifyContent = 'end';
-  }}
+  }} else if (!result) {
+    operand1 = Number(operand1).toString();
+    numDisplay.textContent = operand1;
+  }
 })
 
 /** Handle logic for delete button */
@@ -176,3 +178,14 @@ clear.addEventListener('click', () => {
   operand2 = '';
   numDisplay.textContent = operand1;
 });
+
+/** Map keypresses to button clicks */
+document.addEventListener("keydown", (e) => {
+  if (e.key === '.' || (e.key >= 0 && e.key <= 9)
+    || e.key === 'Backspace' || e.key === 'Delete'
+    || e.key === '+' || e.key === '-' || e.key === '*'
+    || e.key === '/') {
+    document.getElementById(e.key).click();
+  } else if (e.key === 'Enter' || e.key === '=') {
+    document.getElementById('Enter').click();
+}});
